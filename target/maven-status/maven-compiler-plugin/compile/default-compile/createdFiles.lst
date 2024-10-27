@@ -1,0 +1,6 @@
+br\com\anhembi\bolao\App.class
+br\com\anhembi\bolao\db\DBConnection.class
+br\com\anhembi\bolao\service\UsuarioService.class
+br\com\anhembi\bolao\controller\UsuarioController.class
+br\com\anhembi\bolao\model\Usuario.class
+br\com\anhembi\bolao\dao\UsuarioDAO.class
