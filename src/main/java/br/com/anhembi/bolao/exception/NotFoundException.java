@@ -1,4 +1,4 @@
-package exception;
+package br.com.anhembi.bolao.exception;
 
 public class NotFoundException extends Exception {
 

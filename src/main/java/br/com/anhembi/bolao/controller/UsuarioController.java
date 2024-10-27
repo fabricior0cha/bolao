@@ -4,10 +4,10 @@ import java.io.IOException;
 
 import com.google.gson.Gson;
 
+import br.com.anhembi.bolao.exception.NotFoundException;
+import br.com.anhembi.bolao.exception.StandardError;
 import br.com.anhembi.bolao.model.Usuario;
 import br.com.anhembi.bolao.service.UsuarioService;
-import exception.NotFoundException;
-import exception.StandardError;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

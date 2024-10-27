@@ -2,8 +2,8 @@ package br.com.anhembi.bolao.service;
 
 import br.com.anhembi.bolao.dao.UsuarioDAO;
 import br.com.anhembi.bolao.db.DBConnection;
+import br.com.anhembi.bolao.exception.NotFoundException;
 import br.com.anhembi.bolao.model.Usuario;
-import exception.NotFoundException;
 
 public class UsuarioService {
 	
