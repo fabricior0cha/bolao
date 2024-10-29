@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="br.com.anhembi.bolao.AppTest" time="0.015" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="br.com.anhembi.bolao.AppTest" time="0.024" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.class.path" value="C:\Users\Fabricio\eclipse-workspace\bolao\target\test-classes;C:\Users\Fabricio\eclipse-workspace\bolao\target\classes;C:\Users\Fabricio\.m2\repository\junit\junit\3.8.1\junit-3.8.1.jar;C:\Users\Fabricio\.m2\repository\javax\servlet\javax.servlet-api\3.1.0\javax.servlet-api-3.1.0.jar;"/>
+    <property name="java.class.path" value="C:\Users\Fabricio\eclipse-workspace\bolao\target\test-classes;C:\Users\Fabricio\eclipse-workspace\bolao\target\classes;C:\Users\Fabricio\.m2\repository\org\apache\logging\log4j\log4j-api\2.20.0\log4j-api-2.20.0.jar;C:\Users\Fabricio\.m2\repository\org\apache\logging\log4j\log4j-core\2.20.0\log4j-core-2.20.0.jar;C:\Users\Fabricio\.m2\repository\com\google\code\gson\gson\2.8.9\gson-2.8.9.jar;C:\Users\Fabricio\.m2\repository\commons-io\commons-io\2.11.0\commons-io-2.11.0.jar;C:\Users\Fabricio\.m2\repository\org\apache\commons\commons-lang3\3.12.0\commons-lang3-3.12.0.jar;C:\Users\Fabricio\.m2\repository\jakarta\servlet\jakarta.servlet-api\5.0.0\jakarta.servlet-api-5.0.0.jar;C:\Users\Fabricio\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar;C:\Users\Fabricio\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\Fabricio\.m2\repository\com\mysql\mysql-connector-j\8.0.32\mysql-connector-j-8.0.32.jar;C:\Users\Fabricio\.m2\repository\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar;"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="user.variant" value=""/>
@@ -15,9 +15,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="BR"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-21\bin"/>
-    <property name="sun.java.command" value="C:\Users\Fabricio\AppData\Local\Temp\surefire9261952796447825496\surefirebooter-20241026103258680_3.jar C:\Users\Fabricio\AppData\Local\Temp\surefire9261952796447825496 2024-10-26T10-32-58_202-jvmRun1 surefire-20241026103258680_1tmp surefire_0-20241026103258680_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\Fabricio\AppData\Local\Temp\surefire8086780305747615173\surefirebooter-20241028213301213_3.jar C:\Users\Fabricio\AppData\Local\Temp\surefire8086780305747615173 2024-10-28T21-33-01_131-jvmRun1 surefire-20241028213301213_1tmp surefire_0-20241028213301213_2tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="C:\Users\Fabricio\eclipse-workspace\bolao\target\test-classes;C:\Users\Fabricio\eclipse-workspace\bolao\target\classes;C:\Users\Fabricio\.m2\repository\junit\junit\3.8.1\junit-3.8.1.jar;C:\Users\Fabricio\.m2\repository\javax\servlet\javax.servlet-api\3.1.0\javax.servlet-api-3.1.0.jar;"/>
+    <property name="surefire.test.class.path" value="C:\Users\Fabricio\eclipse-workspace\bolao\target\test-classes;C:\Users\Fabricio\eclipse-workspace\bolao\target\classes;C:\Users\Fabricio\.m2\repository\org\apache\logging\log4j\log4j-api\2.20.0\log4j-api-2.20.0.jar;C:\Users\Fabricio\.m2\repository\org\apache\logging\log4j\log4j-core\2.20.0\log4j-core-2.20.0.jar;C:\Users\Fabricio\.m2\repository\com\google\code\gson\gson\2.8.9\gson-2.8.9.jar;C:\Users\Fabricio\.m2\repository\commons-io\commons-io\2.11.0\commons-io-2.11.0.jar;C:\Users\Fabricio\.m2\repository\org\apache\commons\commons-lang3\3.12.0\commons-lang3-3.12.0.jar;C:\Users\Fabricio\.m2\repository\jakarta\servlet\jakarta.servlet-api\5.0.0\jakarta.servlet-api-5.0.0.jar;C:\Users\Fabricio\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar;C:\Users\Fabricio\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\Fabricio\.m2\repository\com\mysql\mysql-connector-j\8.0.32\mysql-connector-j-8.0.32.jar;C:\Users\Fabricio\.m2\repository\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\Fabricio"/>
     <property name="user.language" value="pt"/>
@@ -31,7 +31,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\Fabricio\AppData\Local\Temp\surefire9261952796447825496\surefirebooter-20241026103258680_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Fabricio\AppData\Local\Temp\surefire8086780305747615173\surefirebooter-20241028213301213_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.1+12-LTS-29"/>

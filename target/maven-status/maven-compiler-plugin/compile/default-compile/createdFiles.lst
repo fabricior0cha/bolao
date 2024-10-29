@@ -1,6 +1,12 @@
-br\com\anhembi\bolao\App.class
-br\com\anhembi\bolao\db\DBConnection.class
+br\com\anhembi\bolao\exception\StandardError.class
 br\com\anhembi\bolao\service\UsuarioService.class
-br\com\anhembi\bolao\controller\UsuarioController.class
-br\com\anhembi\bolao\model\Usuario.class
+br\com\anhembi\bolao\dao\BolaoDAO.class
+br\com\anhembi\bolao\exception\NotFoundException.class
 br\com\anhembi\bolao\dao\UsuarioDAO.class
+br\com\anhembi\bolao\model\Bolao.class
+br\com\anhembi\bolao\controller\BolaoController.class
+br\com\anhembi\bolao\db\DBConnection.class
+br\com\anhembi\bolao\controller\LoginController.class
+br\com\anhembi\bolao\controller\UsuarioController.class
+br\com\anhembi\bolao\service\BolaoService.class
+br\com\anhembi\bolao\model\Usuario.class
