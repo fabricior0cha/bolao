@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
+import br.com.anhembi.bolao.exception.UniqueException;
 import br.com.anhembi.bolao.model.Usuario;
 
 public class UsuarioDAO {
@@ -16,7 +17,7 @@ public class UsuarioDAO {
 		this.conn = conn;
 	}
 
-	public void insert(Usuario usuario) {
+	public void insert(Usuario usuario) throws UniqueException {
 		String query = "{CALL sp_usuario_InserirAtualizar (?,?,?,?)}";
 
 		try {
@@ -28,6 +29,9 @@ public class UsuarioDAO {
 
 			stmt.execute();
 		} catch (SQLException e) {
+			if(e.getSQLState().equals("45000")) {
+				throw new UniqueException(e.getMessage());
+			}
 			e.printStackTrace();
 		}
 	}
