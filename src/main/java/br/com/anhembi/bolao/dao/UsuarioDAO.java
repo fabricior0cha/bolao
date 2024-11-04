@@ -18,7 +18,7 @@ public class UsuarioDAO {
 	}
 
 	public void insert(Usuario usuario) throws UniqueException {
-		String query = "{CALL sp_usuario_InserirAtualizar (?,?,?,?)}";
+		String query = "{CALL SP_USUARIO_IN_UP (?,?,?,?)}";
 
 		try {
 			CallableStatement stmt = conn.prepareCall(query);
@@ -28,47 +28,50 @@ public class UsuarioDAO {
 			stmt.setNull(4, Types.INTEGER, null);
 
 			stmt.execute();
+			stmt.close();
 		} catch (SQLException e) {
-			if(e.getSQLState().equals("45000")) {
+			if (e.getSQLState().equals("45000")) {
 				throw new UniqueException(e.getMessage());
 			}
 			e.printStackTrace();
 		}
 	}
 
-	public void update(Usuario usuario, Integer id) {
-		String query = "{CALL sp_usuario_InserirAtualizar (?,?,?,?)}";
+	public void update(Usuario usuario) {
+		String query = "{CALL SP_USUARIO_IN_UP (?,?,?,?)}";
 
 		try {
 			CallableStatement stmt = conn.prepareCall(query);
 			stmt.setString(1, usuario.getNome());
 			stmt.setString(2, usuario.getSenha());
 			stmt.setString(3, usuario.getEmail());
-			stmt.setInt(4, id);
+			stmt.setInt(4, usuario.getId());
 
 			stmt.execute();
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void login(Usuario usuario) {
-		String query = "{CALL sp_usuario_Login (?,?)}";
+		String query = "{CALL SP_USUARIO_LOGIN (?,?)}";
 
 		try {
 			CallableStatement stmt = conn.prepareCall(query);
 			stmt.setString(1, usuario.getEmail());
 			stmt.setString(2, usuario.getSenha());
 			stmt.execute();
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public Usuario findById(Integer id) {
 		Usuario usuario = null;
-		String query = "{CALL sp_usuario_FindById (?)}";
+		String query = "{CALL SP_USUARIO_FIND_BY_ID (?)}";
 
 		try {
 			CallableStatement stmt = conn.prepareCall(query);
@@ -76,12 +79,12 @@ public class UsuarioDAO {
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				usuario = new Usuario();
-				usuario.setId(rs.getInt("usuario_id"));
-				usuario.setNome(rs.getString("usuario_nome"));
-				usuario.setEmail(rs.getString("usuario_email"));
+				usuario.setId(rs.getInt("USU_INT_ID"));
+				usuario.setNome(rs.getString("USU_STR_NOME"));
+				usuario.setEmail(rs.getString("USU_STR_EMAIL"));
 			}
-			
-			
+
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

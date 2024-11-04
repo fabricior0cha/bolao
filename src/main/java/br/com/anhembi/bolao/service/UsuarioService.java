@@ -24,8 +24,8 @@ public class UsuarioService {
 		}
 	}
 
-	public void update(Usuario usuario, Integer id) {
-		dao.update(usuario, id);
+	public void update(Usuario usuario) {
+		dao.update(usuario);
 	}
 
 	public Usuario findById(Integer id) throws NotFoundException {

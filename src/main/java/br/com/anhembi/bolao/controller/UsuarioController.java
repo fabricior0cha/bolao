@@ -47,7 +47,7 @@ public class UsuarioController extends HttpServlet {
 		Gson gson = new Gson();
 		Usuario usuario = gson.fromJson(request.getReader(), Usuario.class);
 
-		service.update(usuario, Integer.parseInt(request.getPathInfo().substring(1)));
+		service.update(usuario);
 
 		response.setStatus(200);
 	}
