@@ -42,6 +42,26 @@ public class JogoController extends HttpServlet {
         
         
 	}
+	
+	@Override
+	protected void doPut(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		Gson gson = new Gson();
+	
+		Jogo jogo = gson.fromJson(request.getReader(), Jogo.class);
+		
+        try {
+			service.update(jogo);
+			response.setStatus(200);
+		} catch (BadRequestException e) {
+			response.setStatus(400);
+			response.getWriter().write(gson.toJson(new StandardError(400, "Bad Request", e.getMessage())));
+		}
+        
+        
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

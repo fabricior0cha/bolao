@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import br.com.anhembi.bolao.exception.UniqueException;
+import br.com.anhembi.bolao.exception.SQLProcedureException;
 import br.com.anhembi.bolao.model.Participante;
 
 public class ParticipanteDAO {
@@ -16,7 +16,7 @@ public class ParticipanteDAO {
 		this.conn = conn;
 	}
 
-	public void insert(Participante participante) throws UniqueException {
+	public void insert(Participante participante) throws SQLProcedureException {
 
 		String query = "{CALL SP_PARTICIPANTE_IN_UP (?,?,?,?)}";
 
@@ -31,13 +31,13 @@ public class ParticipanteDAO {
 			stmt.close();
 		} catch (SQLException e) {
 			if (e.getSQLState().equals("45000")) {
-				throw new UniqueException(e.getMessage());
+				throw new SQLProcedureException(e.getMessage());
 			}
 			e.printStackTrace();
 		}
 	}
 
-	public void update(Participante participante) throws UniqueException {
+	public void update(Participante participante) throws SQLProcedureException {
 
 		String query = "{CALL SP_PARTICIPANTE_IN_UP (?,?,?,?)}";
 
@@ -52,7 +52,7 @@ public class ParticipanteDAO {
 			stmt.close();
 		} catch (SQLException e) {
 			if (e.getSQLState().equals("45000")) {
-				throw new UniqueException(e.getMessage());
+				throw new SQLProcedureException(e.getMessage());
 			}
 			e.printStackTrace();
 		}
