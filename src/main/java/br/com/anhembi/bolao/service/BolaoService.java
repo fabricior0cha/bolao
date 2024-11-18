@@ -1,17 +1,19 @@
 package br.com.anhembi.bolao.service;
 
+import java.util.List;
+
 import br.com.anhembi.bolao.dao.BolaoDAO;
 import br.com.anhembi.bolao.db.DBConnection;
 import br.com.anhembi.bolao.exception.NotFoundException;
 import br.com.anhembi.bolao.model.Bolao;
+import br.com.anhembi.bolao.model.Time;
+import br.com.anhembi.bolao.model.dto.BolaoDTO;
 
 public class BolaoService {
 
 	private final BolaoDAO dao = new BolaoDAO(DBConnection.getConnection());
 
-	public void insert(Bolao bolao) {
-		dao.insert(bolao);
-	}
+	
 
 	public void update(Bolao bolao) {
 		dao.update(bolao);
@@ -29,5 +31,9 @@ public class BolaoService {
 
 	public void delete(Integer id) {
 		dao.delete(id);
+	}
+	
+	public List<Bolao> findAll(){
+		return dao.findAll();
 	}
 }

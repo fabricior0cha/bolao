@@ -2,7 +2,9 @@ package br.com.anhembi.bolao.dao;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Types;
 
 import br.com.anhembi.bolao.exception.SQLProcedureException;
@@ -16,8 +18,8 @@ public class ParticipanteDAO {
 		this.conn = conn;
 	}
 
-	public void insert(Participante participante) throws SQLProcedureException {
-
+	public Integer insert(Participante participante) throws SQLProcedureException {
+		Integer id = null;
 		String query = "{CALL SP_PARTICIPANTE_IN_UP (?,?,?,?)}";
 
 		try {
@@ -27,14 +29,18 @@ public class ParticipanteDAO {
 			stmt.setInt(3, participante.getBolao().getId());
 			stmt.setBoolean(4, Boolean.FALSE);
 
-			stmt.execute();
-			stmt.close();
-		} catch (SQLException e) {
-			if (e.getSQLState().equals("45000")) {
-				throw new SQLProcedureException(e.getMessage());
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				id = rs.getInt("PAR_INT_ID");
 			}
-			e.printStackTrace();
+			stmt.close();
+
+		} catch (SQLException e) {
+			throw new SQLProcedureException("Erro: Usuário já participa desse bolão!");
 		}
+
+		return id;
 	}
 
 	public void update(Participante participante) throws SQLProcedureException {
@@ -57,6 +63,5 @@ public class ParticipanteDAO {
 			e.printStackTrace();
 		}
 	}
-	
 
 }

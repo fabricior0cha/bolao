@@ -1,6 +1,7 @@
 package br.com.anhembi.bolao.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.google.gson.Gson;
 
@@ -70,16 +71,27 @@ public class JogoController extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 
 		Gson gson = new Gson();
+		
+		if(RequestUtils.getPathParamId(request) != null) {
+			try {
+				Jogo jogo = service.findById(RequestUtils.getPathParamId(request));
+				String json = gson.toJson(jogo);
+				response.getWriter().write(json);
+				response.setStatus(200);
+			
+			} catch (NotFoundException e) {
+				response.getWriter().write(gson.toJson(new StandardError(404, "Not found", e.getMessage())));
+				response.setStatus(404);
+			}
+		} else {
 
-		try {
-			Jogo jogo = service.findById(RequestUtils.getPathParamId(request));
-			String json = gson.toJson(jogo);
+			List<Jogo> jogos = service.findAll();
+			String json = gson.toJson(jogos);
 			response.getWriter().write(json);
 			response.setStatus(200);
-		} catch (NotFoundException e) {
-			response.getWriter().write(gson.toJson(new StandardError(404, "Not found", e.getMessage())));
-			response.setStatus(404);
 		}
+		
+		
 
 	}
 }
