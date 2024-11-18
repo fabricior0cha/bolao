@@ -10,9 +10,9 @@ public class ParticipanteService {
 
 	private final ParticipanteDAO dao = new ParticipanteDAO(DBConnection.getConnection());
 
-	public void insert(Participante participante) throws BadRequestException {
+	public Integer insert(Participante participante) throws BadRequestException {
 		try {
-			dao.insert(participante);
+			return dao.insert(participante);
 		} catch (SQLProcedureException e) {
 			throw new BadRequestException(e.getMessage());
 		}

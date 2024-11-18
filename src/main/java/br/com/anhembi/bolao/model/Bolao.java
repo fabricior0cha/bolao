@@ -11,16 +11,18 @@ public class Bolao {
 	
 	private Double premio;
 	
+	private Jogo jogo;
 	
 	public Bolao() {
 		
 	}
 
-	public Bolao(Integer id, String titulo, Date dataCriacao, Double premio) {
+	public Bolao(Integer id, String titulo, Date dataCriacao, Double premio, Jogo jogo) {
 		this.id = id;
 		this.titulo = titulo;
 		this.dataCriacao = dataCriacao;
 		this.premio = premio;
+		this.jogo = jogo;
 	}
 	
 	public Integer getId() {
@@ -53,6 +55,14 @@ public class Bolao {
 
 	public void setPremio(Double premio) {
 		this.premio = premio;
+	}
+
+	public Jogo getJogo() {
+		return jogo;
+	}
+
+	public void setJogo(Jogo jogo) {
+		this.jogo = jogo;
 	}
 
 	

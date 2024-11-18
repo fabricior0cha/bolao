@@ -1,5 +1,7 @@
 package br.com.anhembi.bolao.service;
 
+import java.util.List;
+
 import br.com.anhembi.bolao.dao.JogoDAO;
 import br.com.anhembi.bolao.db.DBConnection;
 import br.com.anhembi.bolao.exception.BadRequestException;
@@ -11,9 +13,9 @@ public class JogoService {
 	
 	private final JogoDAO dao = new JogoDAO(DBConnection.getConnection());
 	
-	public void insert(Jogo jogo) throws BadRequestException {
+	public Integer insert(Jogo jogo) throws BadRequestException {
 		try {
-			dao.insert(jogo);
+			return dao.insert(jogo);
 		} catch (SQLProcedureException e) {
 			throw new BadRequestException(e.getMessage());
 		}
@@ -45,5 +47,11 @@ public class JogoService {
 		}
 
 		return jogo;
+	}
+	
+	public List<Jogo> findAll() {
+		List<Jogo> jogos = dao.findAll();
+
+		return jogos;
 	}
 }

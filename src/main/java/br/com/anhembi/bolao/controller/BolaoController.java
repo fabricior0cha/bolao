@@ -1,12 +1,14 @@
 package br.com.anhembi.bolao.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.google.gson.Gson;
 
 import br.com.anhembi.bolao.exception.NotFoundException;
 import br.com.anhembi.bolao.exception.StandardError;
 import br.com.anhembi.bolao.model.Bolao;
+import br.com.anhembi.bolao.model.Jogo;
 import br.com.anhembi.bolao.service.BolaoService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -51,15 +53,10 @@ public class BolaoController extends HttpServlet {
 
 		Gson gson = new Gson();
 
-		try {
-			Bolao bolao = service.findById(Integer.parseInt(request.getPathInfo().substring(1)));
-			String json = gson.toJson(bolao);
-			response.getWriter().write(json);
-			response.setStatus(200);
-		} catch (NotFoundException e) {
-			response.getWriter().write(gson.toJson(new StandardError(404, "Not found", e.getMessage())));
-			response.setStatus(404);
-		}
+		List<Bolao> boloes = service.findAll();
+		String json = gson.toJson(boloes);
+		response.getWriter().write(json);
+		response.setStatus(200);
 
 	}
 	
