@@ -1,0 +1,152 @@
+package br.com.anhembi.bolao.dao;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
+
+import br.com.anhembi.bolao.exception.SQLProcedureException;
+import br.com.anhembi.bolao.model.Bolao;
+import br.com.anhembi.bolao.model.Jogo;
+import br.com.anhembi.bolao.model.Time;
+
+public class JogoDAO {
+	private Connection conn;
+
+	public JogoDAO(Connection conn) {
+		this.conn = conn;
+	}
+
+	public void insert(Jogo jogo) throws SQLProcedureException {
+		String query = "{CALL SP_JOGO_IN_UP (?,?,?,?,?,?,?)}";
+		
+		try {
+			CallableStatement stmt = conn.prepareCall(query);
+			stmt.setNull(1, Types.INTEGER, null);
+			stmt.setDate(2, new Date(jogo.getData().getTime()));
+			stmt.setInt(3, 0);
+			stmt.setInt(4, 0);
+			stmt.setInt(5, jogo.getTimeUm().getId());
+			stmt.setInt(6, jogo.getTimeDois().getId());
+			stmt.setInt(7, jogo.getBolao().getId());
+
+			stmt.execute();
+			stmt.close();
+		} catch (SQLException e) {
+			if (e.getSQLState().equals("45000")) {
+				throw new SQLProcedureException(e.getMessage());
+			}
+			e.printStackTrace();
+		}
+	}
+	
+	public void update(Jogo jogo) throws SQLProcedureException {
+		String query = "{CALL SP_JOGO_IN_UP (?,?,?,?,?,?,?)}";
+
+		try {
+			CallableStatement stmt = conn.prepareCall(query);
+			stmt.setInt(1, jogo.getId());
+			stmt.setDate(2, Date.valueOf(jogo.getData().toString()));
+			stmt.setInt(3, 0);
+			stmt.setInt(4, 0);
+			stmt.setInt(5, jogo.getTimeUm().getId());
+			stmt.setInt(6, jogo.getTimeDois().getId());
+			stmt.setInt(7, jogo.getBolao().getId());
+
+			stmt.execute();
+			stmt.close();
+		} catch (SQLException e) {
+			if (e.getSQLState().equals("45000")) {
+				throw new SQLProcedureException(e.getMessage());
+			}
+			e.printStackTrace();
+		}
+	}
+	
+	public Jogo findById(Integer id) {
+		Jogo jogo = null;
+		String query = "{CALL SP_JOGO_FIND_BY_ID (?)}";
+
+		try {
+			CallableStatement stmt = conn.prepareCall(query);
+			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				jogo = new Jogo();
+	            jogo.setId(rs.getInt("JOG_INT_ID"));
+	            jogo.setData(rs.getDate("JOG_DATE_DATA"));
+	            jogo.setTotalTimeUm(rs.getInt("JOG_INT_T1"));
+	            jogo.setTotalTimeDois(rs.getInt("JOG_INT_T2"));
+
+	            Time timeUm = new Time();
+	            timeUm.setId(rs.getInt("TIM1_INT_ID"));
+	            timeUm.setNome(rs.getString("TIM1_STR_NOME"));
+	            timeUm.setUrlEmblema(rs.getString("TIM1_STR_URL_EMBLEMA"));
+	            jogo.setTimeUm(timeUm);
+
+	            Time timeDois = new Time();
+	            timeDois.setId(rs.getInt("TIM2_INT_ID"));
+	            timeDois.setNome(rs.getString("TIM2_STR_NOME"));
+	            timeDois.setUrlEmblema(rs.getString("TIM2_STR_URL_EMBLEMA"));
+	            jogo.setTimeDois(timeDois);
+
+	            Bolao bolao = new Bolao();
+	        	bolao.setId(rs.getInt("BOL_INT_ID"));
+				bolao.setTitulo(rs.getString("BOL_STR_TITULO"));
+				bolao.setDataCriacao(rs.getDate("BOL_DT_CRIACAO"));
+				bolao.setPremio(rs.getDouble("BOL_DOU_PREMIO"));
+	            jogo.setBolao(bolao);
+			}
+			stmt.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return jogo;
+	}
+	
+	public Jogo findByBolaoId(Integer bolaoId) {
+		Jogo jogo = null;
+		String query = "{CALL SP_JOGO_FIND_BY_BOLAO (?)}";
+
+		try {
+			CallableStatement stmt = conn.prepareCall(query);
+			stmt.setInt(1, bolaoId);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				jogo = new Jogo();
+	            jogo.setId(rs.getInt("JOG_INT_ID"));
+	            jogo.setData(rs.getDate("JOG_DATE_DATA"));
+	            jogo.setTotalTimeUm(rs.getInt("JOG_INT_T1"));
+	            jogo.setTotalTimeDois(rs.getInt("JOG_INT_T2"));
+
+	            Time timeUm = new Time();
+	            timeUm.setId(rs.getInt("TIM1_INT_ID"));
+	            timeUm.setNome(rs.getString("TIM1_STR_NOME"));
+	            timeUm.setUrlEmblema(rs.getString("TIM1_STR_URL_EMBLEMA"));
+	            jogo.setTimeUm(timeUm);
+
+	            Time timeDois = new Time();
+	            timeDois.setId(rs.getInt("TIM2_INT_ID"));
+	            timeDois.setNome(rs.getString("TIM2_STR_NOME"));
+	            timeDois.setUrlEmblema(rs.getString("TIM2_STR_URL_EMBLEMA"));
+	            jogo.setTimeDois(timeDois);
+
+	            Bolao bolao = new Bolao();
+	        	bolao.setId(rs.getInt("BOL_INT_ID"));
+				bolao.setTitulo(rs.getString("BOL_STR_TITULO"));
+				bolao.setDataCriacao(rs.getDate("BOL_DT_CRIACAO"));
+				bolao.setPremio(rs.getDouble("BOL_DOU_PREMIO"));
+	            jogo.setBolao(bolao);
+			}
+			stmt.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return jogo;
+	}
+	
+}
