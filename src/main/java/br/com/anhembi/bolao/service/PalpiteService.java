@@ -1,5 +1,7 @@
 package br.com.anhembi.bolao.service;
 
+import java.util.List;
+
 import br.com.anhembi.bolao.dao.PalpiteDAO;
 import br.com.anhembi.bolao.db.DBConnection;
 import br.com.anhembi.bolao.exception.BadRequestException;
@@ -24,13 +26,13 @@ public class PalpiteService {
 		Participante participante = new Participante();
 		Bolao bolao = null;
 		Usuario usuario = null;
-		
+
 		try {
 			bolao = bolaoService.findById(dto.getIdBolao());
 		} catch (NotFoundException e) {
 			throw new NotFoundException(e.getMessage());
 		}
-		
+
 		try {
 			usuario = usuarioService.findById(dto.getIdUsuario());
 		} catch (NotFoundException e) {
@@ -41,11 +43,13 @@ public class PalpiteService {
 		participante.setUsuario(usuario);
 		participante.setVencedor(Boolean.FALSE);
 
-		try {
-			Integer idParticipante = participanteService.insert(participante);
-			participante.setId(idParticipante);
-		} catch (BadRequestException e) {
-			throw new BadRequestException(e.getMessage());
+		if (dto.getId() == null) {
+			try {
+				Integer idParticipante = participanteService.insert(participante);
+				participante.setId(idParticipante);
+			} catch (BadRequestException e) {
+				throw new BadRequestException(e.getMessage());
+			}
 		}
 
 		Palpite palpite = new Palpite();
@@ -53,7 +57,17 @@ public class PalpiteService {
 		palpite.setParticipante(participante);
 		palpite.setResultadoTimeUm(dto.getResultadoTimeUm());
 		palpite.setResultadoTimeDois(dto.getResultadoTimeDois());
-		
+		palpite.setId(dto.getId());
+
+		System.out.println(palpite.getId());
 		dao.insert(palpite);
+	}
+
+	public List<Palpite> findAllByUsuario(Integer idUsuario) {
+		return dao.findAllByUsuario(idUsuario);
+	}
+
+	public void deleteByParticipante(Integer idParticipante) {
+		dao.deleteByParticipante(idParticipante);
 	}
 }

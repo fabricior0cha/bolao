@@ -9,19 +9,19 @@ public class Palpite {
 
 	private Integer resultadoTimeDois;
 
-	private Date dataCriaca;
+	private Date dataCriacao;
 
 	private Participante participante;
 
 	private Bolao bolao;
 
-	public Palpite(Integer id, Integer resultadoTimeUm, Integer resultadoTimeDois, Date dataCriaca,
+	public Palpite(Integer id, Integer resultadoTimeUm, Integer resultadoTimeDois, Date dataCriacao,
 			Participante participante, Bolao bolao) {
 
 		this.id = id;
 		this.resultadoTimeUm = resultadoTimeUm;
 		this.resultadoTimeDois = resultadoTimeDois;
-		this.dataCriaca = dataCriaca;
+		this.dataCriacao = dataCriacao;
 		this.participante = participante;
 		this.bolao = bolao;
 	}
@@ -53,12 +53,12 @@ public class Palpite {
 		this.resultadoTimeDois = resultadoTimeDois;
 	}
 
-	public Date getDataCriaca() {
-		return dataCriaca;
+	public Date getDataCriacao() {
+		return dataCriacao;
 	}
 
-	public void setDataCriaca(Date dataCriaca) {
-		this.dataCriaca = dataCriaca;
+	public void setDataCriacao(Date dataCriacao) {
+		this.dataCriacao = dataCriacao;
 	}
 
 	public Participante getParticipante() {

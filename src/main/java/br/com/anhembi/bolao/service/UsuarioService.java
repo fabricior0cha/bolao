@@ -4,6 +4,7 @@ import br.com.anhembi.bolao.dao.UsuarioDAO;
 import br.com.anhembi.bolao.db.DBConnection;
 import br.com.anhembi.bolao.exception.BadRequestException;
 import br.com.anhembi.bolao.exception.NotFoundException;
+import br.com.anhembi.bolao.exception.UnauthorizedException;
 import br.com.anhembi.bolao.exception.UniqueException;
 import br.com.anhembi.bolao.model.Usuario;
 
@@ -24,21 +25,25 @@ public class UsuarioService {
 		}
 	}
 
-	public void update(Usuario usuario) {
-		dao.update(usuario);
-	}
+	
 
 	public Usuario findById(Integer id) throws NotFoundException {
 		Usuario usuario = dao.findById(id);
 
 		if (usuario == null) {
-			throw new NotFoundException("Usuário não encontrado com id: " + id);
+			throw new NotFoundException("Erro: Usuário não encontrado com id: " + id);
 		}
 
 		return usuario;
 	}
 
-	public void login(Usuario usuario) {
-		dao.login(usuario);
+	public Usuario login(Usuario usuario) throws UnauthorizedException {
+		Usuario usuarioLogado = dao.login(usuario);
+
+		if (usuarioLogado == null) {
+			throw new UnauthorizedException("Erro: E-mail ou senha incorretos");
+		}
+
+		return usuarioLogado;
 	}
 }

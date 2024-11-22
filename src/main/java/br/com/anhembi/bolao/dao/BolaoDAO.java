@@ -22,7 +22,7 @@ public class BolaoDAO {
 	}
 	
 	public void insert(Bolao bolao) {
-		String query = "{CALL SP_BOLAO_IN_UP(?,?,?,?)}";
+		String query = "{CALL SP_BOLAO_IN_UP(?,?,?,?,?)}";
 		
 		try {
 			CallableStatement stmt = conn.prepareCall(query);
@@ -30,7 +30,7 @@ public class BolaoDAO {
 			stmt.setString(2, bolao.getTitulo());
 			stmt.setDate(3, Date.valueOf(LocalDate.now()));
 			stmt.setDouble(4, bolao.getPremio());
-			
+			stmt.setInt(5, bolao.getJogo().getId());
 			stmt.execute();
 			stmt.close();
 		} catch(Exception e) {
@@ -78,26 +78,15 @@ public class BolaoDAO {
 		return bolao;
 	}
 	
-	public void delete(Integer id) {
-		String query = "{CALL SP_BOLAO_DELETE_BY_ID(?)}";
-		
-		try {
-			CallableStatement stmt = conn.prepareCall(query);
-			stmt.setInt(1, id);
-			
-			stmt.execute();
-			stmt.close();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
-	public List<Bolao> findAll(){
+	public List<Bolao> findAllByFiltros(Integer idUsuario){
 		List<Bolao> boloes = new ArrayList<Bolao>();
-		String query = "{CALL SP_BOLAO_FIND_ALL ()}";
+		String query = "{CALL SP_BOLAO_FIND_ALL_BY_FILTROS(?, ?)}";
 
 		try {
 			CallableStatement stmt = conn.prepareCall(query);
+			stmt.setInt(1, idUsuario);
+			stmt.setDate(2, Date.valueOf(LocalDate.now()));
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				
@@ -107,6 +96,35 @@ public class BolaoDAO {
 				bolao.setDataCriacao(rs.getDate("BOL_DT_CRIACAO"));
 				bolao.setPremio(rs.getDouble("BOL_DOU_PREMIO"));
 				bolao.setJogo(buildJogo(rs));
+				
+				boloes.add(bolao);
+			}
+			stmt.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return boloes;
+	}
+	
+	public List<Bolao> findAll(){
+		List<Bolao> boloes = new ArrayList<Bolao>();
+		String query = "{CALL SP_BOLAO_FIND_ALL()}";
+
+		try {
+			CallableStatement stmt = conn.prepareCall(query);
+
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				
+		        Bolao bolao = new Bolao();
+		    	bolao.setId(rs.getInt("BOL_INT_ID"));
+				bolao.setTitulo(rs.getString("BOL_STR_TITULO"));
+				bolao.setDataCriacao(rs.getDate("BOL_DT_CRIACAO"));
+				bolao.setPremio(rs.getDouble("BOL_DOU_PREMIO"));
+				bolao.setJogo(buildJogo(rs));
+				
+				boloes.add(bolao);
 			}
 			stmt.close();
 			
@@ -119,9 +137,10 @@ public class BolaoDAO {
 	public Jogo buildJogo(ResultSet rs) throws SQLException {
 		Jogo jogo = new Jogo();
         jogo.setId(rs.getInt("JOG_INT_ID"));
-        jogo.setData(rs.getDate("JOG_DATE_DATA"));
-        jogo.setTotalTimeUm(rs.getInt("JOG_INT_T1"));
-        jogo.setTotalTimeDois(rs.getInt("JOG_INT_T2"));
+        jogo.setData(new java.util.Date(rs.getDate("JOG_DATE_DATA").getTime()));
+        
+        jogo.setTotalTimeUm(rs.getObject("JOG_INT_T1", Integer.class));
+        jogo.setTotalTimeDois(rs.getObject("JOG_INT_T2", Integer.class));
 
         Time timeUm = new Time();
         timeUm.setId(rs.getInt("TIM1_INT_ID"));

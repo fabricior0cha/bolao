@@ -10,18 +10,19 @@ public class Usuario {
 	
 	private String senha;
 	
-	
+	private TipoUsuario tipo;
 
 	public Usuario() {
 	}
 	
 	
 
-	public Usuario(Integer id, String email, String nome, String senha) {
+	public Usuario(Integer id, String email, String nome, String senha, TipoUsuario tipo) {
 		this.id = id;
 		this.email = email;
 		this.nome = nome;
 		this.senha = senha;
+		this.tipo = tipo;
 	}
 
 	public Integer getId() {
@@ -54,6 +55,18 @@ public class Usuario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+
+
+	public TipoUsuario getTipo() {
+		return tipo;
+	}
+
+
+
+	public void setTipo(TipoUsuario tipo) {
+		this.tipo = tipo;
 	}
 	
 	

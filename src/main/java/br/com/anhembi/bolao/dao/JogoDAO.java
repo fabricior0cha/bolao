@@ -22,22 +22,34 @@ public class JogoDAO {
 	}
 
 	public Integer insert(Jogo jogo) throws SQLProcedureException {
-		String query = "{CALL SP_JOGO_IN_UP (?,?,?,?,?,?,?)}";
+		String query = "{CALL SP_JOGO_IN_UP (?,?,?,?,?,?)}";
 		Integer idJogo = null;
 		try {
 			CallableStatement stmt = conn.prepareCall(query);
-			stmt.setNull(1, Types.INTEGER, null);
+			if(jogo.getId() != null) {
+				stmt.setInt(1, jogo.getId());
+			} else {
+				stmt.setNull(1, Types.INTEGER, null);
+			}
+			
 			stmt.setDate(2, new Date(jogo.getData().getTime()));
-			stmt.setInt(3, 0);
-			stmt.setInt(4, 0);
+			
+			if(jogo.getTotalTimeUm() != null && jogo.getTotalTimeDois() != null) {
+				stmt.setInt(3, jogo.getTotalTimeUm());
+				stmt.setInt(4, jogo.getTotalTimeDois());
+			} else {
+				stmt.setNull(3, Types.INTEGER, null);
+				stmt.setNull(4, Types.INTEGER, null);
+			}
+			
 			stmt.setInt(5, jogo.getTimeUm().getId());
 			stmt.setInt(6, jogo.getTimeDois().getId());
-			stmt.setInt(7, jogo.getBolao().getId());
+		
 			
 			ResultSet rs = stmt.executeQuery();
 			
 			if(rs.next()) {
-				idJogo = rs.getInt(0);
+				idJogo = rs.getInt("JOG_INT_ID");
 			}
 			stmt.close();
 		} catch (SQLException e) {
@@ -157,7 +169,7 @@ public class JogoDAO {
 	public Jogo buildJogo(ResultSet rs) throws SQLException {
 		Jogo jogo = new Jogo();
         jogo.setId(rs.getInt("JOG_INT_ID"));
-        jogo.setData(rs.getDate("JOG_DATE_DATA"));
+        jogo.setData(new java.util.Date(rs.getDate("JOG_DATE_DATA").getTime()));
         jogo.setTotalTimeUm(rs.getInt("JOG_INT_T1"));
         jogo.setTotalTimeDois(rs.getInt("JOG_INT_T2"));
 

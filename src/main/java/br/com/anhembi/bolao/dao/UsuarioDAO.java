@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 import br.com.anhembi.bolao.exception.UniqueException;
+import br.com.anhembi.bolao.model.TipoUsuario;
 import br.com.anhembi.bolao.model.Usuario;
 
 public class UsuarioDAO {
@@ -18,15 +19,20 @@ public class UsuarioDAO {
 	}
 
 	public void insert(Usuario usuario) throws UniqueException {
-		String query = "{CALL SP_USUARIO_IN_UP (?,?,?,?)}";
+		String query = "{CALL SP_USUARIO_IN_UP (?,?,?,?,?)}";
 
 		try {
 			CallableStatement stmt = conn.prepareCall(query);
 			stmt.setString(1, usuario.getNome());
 			stmt.setString(2, usuario.getSenha());
 			stmt.setString(3, usuario.getEmail());
-			stmt.setNull(4, Types.INTEGER, null);
-
+		
+			if(usuario.getId() != null) {
+				stmt.setInt(4, usuario.getId());
+			} else {
+				stmt.setNull(4, Types.INTEGER, null);
+			}
+			stmt.setInt(5, 2);
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
@@ -37,36 +43,31 @@ public class UsuarioDAO {
 		}
 	}
 
-	public void update(Usuario usuario) {
-		String query = "{CALL SP_USUARIO_IN_UP (?,?,?,?)}";
-
-		try {
-			CallableStatement stmt = conn.prepareCall(query);
-			stmt.setString(1, usuario.getNome());
-			stmt.setString(2, usuario.getSenha());
-			stmt.setString(3, usuario.getEmail());
-			stmt.setInt(4, usuario.getId());
-
-			stmt.execute();
-			stmt.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void login(Usuario usuario) {
+	
+	public Usuario login(Usuario usuario) {
 		String query = "{CALL SP_USUARIO_LOGIN (?,?)}";
-
+		Usuario usuarioLogado = null;
 		try {
 			CallableStatement stmt = conn.prepareCall(query);
 			stmt.setString(1, usuario.getEmail());
 			stmt.setString(2, usuario.getSenha());
-			stmt.execute();
+			ResultSet rs = stmt.executeQuery();
+			
+			if (rs.next()) {
+				usuarioLogado = new Usuario();
+				usuarioLogado.setId(rs.getInt("USU_INT_ID"));
+				usuarioLogado.setNome(rs.getString("USU_STR_NOME"));
+				usuarioLogado.setEmail(rs.getString("USU_STR_EMAIL"));
+				usuarioLogado.setSenha(rs.getString("USU_STR_SENHA"));
+				TipoUsuario tipo = new TipoUsuario(rs.getInt("TP_INT_ID"), rs.getString("TP_STR_CODIGO"));
+				usuarioLogado.setTipo(tipo);
+			}
+			
 			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		return usuarioLogado;
 	}
 
 	public Usuario findById(Integer id) {
@@ -82,6 +83,9 @@ public class UsuarioDAO {
 				usuario.setId(rs.getInt("USU_INT_ID"));
 				usuario.setNome(rs.getString("USU_STR_NOME"));
 				usuario.setEmail(rs.getString("USU_STR_EMAIL"));
+				usuario.setSenha(rs.getString("USU_STR_SENHA"));
+				TipoUsuario tipo = new TipoUsuario(rs.getInt("TP_INT_ID"), rs.getString("TP_STR_CODIGO"));
+				usuario.setTipo(tipo);
 			}
 
 			stmt.close();

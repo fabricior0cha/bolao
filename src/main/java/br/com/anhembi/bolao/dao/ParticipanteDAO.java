@@ -4,7 +4,6 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Types;
 
 import br.com.anhembi.bolao.exception.SQLProcedureException;
@@ -43,23 +42,19 @@ public class ParticipanteDAO {
 		return id;
 	}
 
-	public void update(Participante participante) throws SQLProcedureException {
+	
+	public void updateVencedor(Integer idJogo)  {
 
-		String query = "{CALL SP_PARTICIPANTE_IN_UP (?,?,?,?)}";
+		String query = "{CALL SP_PARTICIPANTE_UP_VENCEDOR(?)}";
 
 		try {
 			CallableStatement stmt = conn.prepareCall(query);
-			stmt.setInt(1, participante.getId());
-			stmt.setInt(2, participante.getUsuario().getId());
-			stmt.setInt(3, participante.getBolao().getId());
-			stmt.setBoolean(4, participante.getVencedor());
+			stmt.setInt(1, idJogo);
+			
 
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			if (e.getSQLState().equals("45000")) {
-				throw new SQLProcedureException(e.getMessage());
-			}
 			e.printStackTrace();
 		}
 	}

@@ -22,8 +22,7 @@ public class TimeService {
 		return time;
 	}
 	
-	public List<Time> findByAll(String nome){
-		
-		return dao.findByAll(nome);
+	public List<Time> findAll(String nome){
+		return dao.findAll(nome);
 	}
 }

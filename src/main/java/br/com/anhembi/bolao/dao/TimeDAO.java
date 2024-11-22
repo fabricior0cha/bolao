@@ -39,7 +39,7 @@ public class TimeDAO {
 		return time;
 	}
 	
-	public List<Time> findByAll(String nome) {
+	public List<Time> findAll(String nome) {
 		
 		ArrayList<Time> times = new ArrayList<Time>();
 		

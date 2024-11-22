@@ -11,7 +11,7 @@ public class DBConnection {
 	public static Connection getConnection()  {
 		if(conn == null) {
 			try {
-				 String url = "jdbc:mysql://localhost:3306/db_bolao_anhembi";
+				 String url = "jdbc:mysql://localhost:3306/db_bolao_anhembi_teste";
 				 String username = "root";
 				 String password = "admin";
 				 Class.forName("com.mysql.cj.jdbc.Driver");

@@ -6,6 +6,8 @@ public class PalpiteDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
+	private Integer id;
+	
 	private Integer idUsuario;
 	
 	private Integer idBolao;
@@ -16,8 +18,9 @@ public class PalpiteDTO implements Serializable{
 	
 	private Integer resultadoTimeDois;
 
-	public PalpiteDTO(Integer idUsuario, Integer idBolao, Boolean vencedor, Integer resultadoTimeUm,
+	public PalpiteDTO(Integer id, Integer idUsuario, Integer idBolao, Boolean vencedor, Integer resultadoTimeUm,
 			Integer resultadoTimeDois) {
+		this.id = id;
 		this.idUsuario = idUsuario;
 		this.idBolao = idBolao;
 		this.vencedor = vencedor;
@@ -26,6 +29,14 @@ public class PalpiteDTO implements Serializable{
 	}
 
 	public PalpiteDTO() {
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Integer getIdUsuario() {

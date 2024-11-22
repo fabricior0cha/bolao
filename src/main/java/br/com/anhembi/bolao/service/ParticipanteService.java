@@ -18,11 +18,8 @@ public class ParticipanteService {
 		}
 	}
 	
-	public void update(Participante participante) throws BadRequestException {
-		try {
-			dao.update(participante);
-		} catch (SQLProcedureException e) {
-			throw new BadRequestException(e.getMessage());
-		}
+	
+	public void updateVencedor(Integer idJogo) {
+		dao.updateVencedor(idJogo);
 	}
 }

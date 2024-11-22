@@ -44,12 +44,20 @@ public class UsuarioController extends HttpServlet {
 	@Override
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 		Gson gson = new Gson();
 		Usuario usuario = gson.fromJson(request.getReader(), Usuario.class);
 
-		service.update(usuario);
+		try {
+			service.insert(usuario);
+			response.setStatus(200);
+		} catch (BadRequestException e) {
+			response.setStatus(400);
+			response.getWriter().write(gson.toJson(new StandardError(400, "Bad Request", e.getMessage())));
 
-		response.setStatus(200);
+		}
+
 	}
 
 	@Override

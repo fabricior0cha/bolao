@@ -6,22 +6,39 @@ import java.util.Date;
 public class BolaoDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	private Integer id;
 	private Date dataJogo;
 	private Integer idTimeUm;
 	private Integer idTimeDois;
 	private String titulo;
 	private Double premio;
+	private Integer totalTimeUm;
+	private Integer totalTimeDois;
 
-	public BolaoDTO(Date dataJogo, Integer idTimeUm, Integer idTimeDois, String titulo, Double premio) {
+	
+
+	public BolaoDTO(Integer id, Date dataJogo, Integer idTimeUm, Integer idTimeDois, String titulo, Double premio,
+			Integer totalTimeUm, Integer totalTimeDois) {
+		this.id = id;
 		this.dataJogo = dataJogo;
 		this.idTimeUm = idTimeUm;
 		this.idTimeDois = idTimeDois;
 		this.titulo = titulo;
 		this.premio = premio;
+		this.totalTimeUm = totalTimeUm;
+		this.totalTimeDois = totalTimeDois;
 	}
 
 	public BolaoDTO() {
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Date getDataJogo() {
@@ -64,4 +81,21 @@ public class BolaoDTO implements Serializable {
 		this.premio = premio;
 	}
 
+	public Integer getTotalTimeUm() {
+		return totalTimeUm;
+	}
+
+	public void setTotalTimeUm(Integer totalTimeUm) {
+		this.totalTimeUm = totalTimeUm;
+	}
+
+	public Integer getTotalTimeDois() {
+		return totalTimeDois;
+	}
+
+	public void setTotalTimeDois(Integer totalTimeDois) {
+		this.totalTimeDois = totalTimeDois;
+	}
+
+	
 }
