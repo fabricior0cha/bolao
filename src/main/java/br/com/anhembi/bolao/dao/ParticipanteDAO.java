@@ -8,6 +8,7 @@ import java.sql.Types;
 
 import br.com.anhembi.bolao.exception.SQLProcedureException;
 import br.com.anhembi.bolao.model.Participante;
+import br.com.anhembi.bolao.model.Time;
 
 public class ParticipanteDAO {
 
@@ -19,13 +20,12 @@ public class ParticipanteDAO {
 
 	public Integer insert(Participante participante) throws SQLProcedureException {
 		Integer id = null;
-		String query = "{CALL SP_PARTICIPANTE_IN_UP (?,?,?,?)}";
+		String query = "{CALL SP_PARTICIPANTE_IN_UP (?,?,?)}";
 
 		try {
 			CallableStatement stmt = conn.prepareCall(query);
 			stmt.setNull(1, Types.INTEGER, null);
 			stmt.setInt(2, participante.getUsuario().getId());
-			stmt.setInt(3, participante.getBolao().getId());
 			stmt.setBoolean(4, Boolean.FALSE);
 
 			ResultSet rs = stmt.executeQuery();
@@ -43,9 +43,9 @@ public class ParticipanteDAO {
 	}
 
 	
-	public void updateVencedor(Integer idJogo)  {
+	public void updatePontos(Integer idJogo)  {
 
-		String query = "{CALL SP_PARTICIPANTE_UP_VENCEDOR(?)}";
+		String query = "{CALL SP_PARTICIPANTE_UP_PONTOS(?)}";
 
 		try {
 			CallableStatement stmt = conn.prepareCall(query);
@@ -57,6 +57,50 @@ public class ParticipanteDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public Participante findById(Integer id) {
+		Participante participante = null;
+		String query = "{CALL SP_PARTICIPANTE_FIND_BY_ID (?)}";
+
+		try {
+			CallableStatement stmt = conn.prepareCall(query);
+			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				participante = new Participante();
+				participante.setId(rs.getInt("PAR_INT_ID"));
+				participante.setPontos(rs.getInt("PAR_INT_PONTOS"));
+			
+			}
+
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return participante;
+	}
+	
+	public Participante findByUsuario(Integer idUsuario) {
+		Participante participante = null;
+		String query = "{CALL SP_PARTICIPANTE_FIND_BY_USUARIO (?)}";
+
+		try {
+			CallableStatement stmt = conn.prepareCall(query);
+			stmt.setInt(1, idUsuario);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				participante = new Participante();
+				participante.setId(rs.getInt("PAR_INT_ID"));
+				participante.setPontos(rs.getInt("PAR_INT_PONTOS"));
+			
+			}
+
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return participante;
 	}
 
 }

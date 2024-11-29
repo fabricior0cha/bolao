@@ -29,7 +29,7 @@ public class TimeDAO {
 				time = new Time();
 				time.setId(rs.getInt("TIM_INT_ID"));
 				time.setNome(rs.getString("TIM_STR_NOME"));
-				time.setUrlEmblema(rs.getString("TIM_STR_URL_EMBLEMA"));
+				
 			}
 
 			stmt.close();
@@ -55,7 +55,7 @@ public class TimeDAO {
 				Time time = new Time();
 				time.setId(rs.getInt("TIM_INT_ID"));
 				time.setNome(rs.getString("TIM_STR_NOME"));
-				time.setUrlEmblema(rs.getString("TIM_STR_URL_EMBLEMA"));
+				
 				times.add(time);
 			}
 

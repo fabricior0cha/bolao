@@ -1,18 +1,17 @@
 package br.com.anhembi.bolao.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Jogo {
 
 	private Integer id;
 	
-	private Date data;
+	private LocalDateTime horario;
 	
 	private Time timeUm;
 	
 	private Time timeDois;
-	
-	private Bolao bolao;
 	
 	private Integer totalTimeUm;
 	
@@ -21,14 +20,13 @@ public class Jogo {
 	public Jogo() {
 	}
 
-	public Jogo(Integer id, Date data, Time timeUm, Time timeDois, Bolao bolao, Integer totalTimeUm,
+	public Jogo(Integer id, LocalDateTime horario, Time timeUm, Time timeDois, Integer totalTimeUm,
 			Integer totalTimeDois) {
 		super();
 		this.id = id;
-		this.data = data;
+		this.horario = horario;
 		this.timeUm = timeUm;
 		this.timeDois = timeDois;
-		this.bolao = bolao;
 		this.totalTimeUm = totalTimeUm;
 		this.totalTimeDois = totalTimeDois;
 	}
@@ -41,12 +39,12 @@ public class Jogo {
 		this.id = id;
 	}
 
-	public Date getData() {
-		return data;
+	public LocalDateTime getHorario() {
+		return horario;
 	}
 
-	public void setData(Date data) {
-		this.data = data;
+	public void setHorario(LocalDateTime horario) {
+		this.horario = horario;
 	}
 
 	public Time getTimeUm() {
@@ -63,14 +61,6 @@ public class Jogo {
 
 	public void setTimeDois(Time timeDois) {
 		this.timeDois = timeDois;
-	}
-
-	public Bolao getBolao() {
-		return bolao;
-	}
-
-	public void setBolao(Bolao bolao) {
-		this.bolao = bolao;
 	}
 
 	public Integer getTotalTimeUm() {

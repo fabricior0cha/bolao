@@ -1,9 +1,16 @@
 package br.com.anhembi.bolao.controller;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializer;
 
 import br.com.anhembi.bolao.exception.BadRequestException;
 import br.com.anhembi.bolao.exception.NotFoundException;
@@ -46,9 +53,10 @@ public class PalpiteController extends HttpServlet {
 
 		}
 	}
-	
+
 	@Override
-	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPut(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 
@@ -74,10 +82,25 @@ public class PalpiteController extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		String idUsuario = request.getParameter("idUsuario");
-		Gson gson = new Gson();
+		String idParticipante = request.getParameter("idParticipante");
+		Gson gson = new GsonBuilder()
+				.registerTypeAdapter(LocalDateTime.class,
+						(JsonSerializer) (localDateTime, type,
+								jsonSerializationContext) -> new JsonPrimitive(((LocalDateTime) localDateTime)
+										.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))))
+				.registerTypeAdapter(LocalDateTime.class,
+						(JsonDeserializer<LocalDateTime>) (json, type, jsonDeserializationContext) -> {
+							try {
+								return LocalDateTime.parse(json.getAsJsonPrimitive().getAsString(),
+										DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+							} catch (DateTimeParseException e) {
+								return LocalDateTime.parse(json.getAsJsonPrimitive().getAsString(),
+										DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS"));
+							}
+						})
+				.create();
 
-		List<Palpite> palpites = service.findAllByUsuario(Integer.parseInt(idUsuario));
+		List<Palpite> palpites = service.findByParticipante(Integer.parseInt(idParticipante));
 		String json = gson.toJson(palpites);
 		response.getWriter().write(json);
 		response.setStatus(200);
@@ -89,15 +112,15 @@ public class PalpiteController extends HttpServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		Gson gson = new Gson();
-		String idParticipante = request.getParameter("idParticipante");
+		String id = request.getParameter("id");
 
-		if (idParticipante == null) {
+		if (id == null) {
 			response.setStatus(400);
 			response.getWriter().write(gson
-					.toJson(new StandardError(400, "Bad Request", "Erro: Necessário informar o id do participante")));
+					.toJson(new StandardError(400, "Bad Request", "Erro: Necessário informar o id do palpite")));
 		} else {
 
-			service.deleteByParticipante(Integer.parseInt(idParticipante));
+			service.delete(Integer.parseInt(id));
 			response.setStatus(204);
 		}
 

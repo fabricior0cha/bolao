@@ -7,6 +7,7 @@ import br.com.anhembi.bolao.db.DBConnection;
 import br.com.anhembi.bolao.exception.BadRequestException;
 import br.com.anhembi.bolao.exception.NotFoundException;
 import br.com.anhembi.bolao.model.Bolao;
+import br.com.anhembi.bolao.model.Jogo;
 import br.com.anhembi.bolao.model.Palpite;
 import br.com.anhembi.bolao.model.Participante;
 import br.com.anhembi.bolao.model.Usuario;
@@ -17,57 +18,52 @@ public class PalpiteService {
 
 	private final ParticipanteService participanteService = new ParticipanteService();
 
-	private final BolaoService bolaoService = new BolaoService();
+	private final JogoService jogoService = new JogoService();
 
 	private final UsuarioService usuarioService = new UsuarioService();
 
 	public void insert(PalpiteDTO dto) throws NotFoundException, BadRequestException {
 
 		Participante participante = new Participante();
-		Bolao bolao = null;
-		Usuario usuario = null;
+		Jogo jogo = null;
 
 		try {
-			bolao = bolaoService.findById(dto.getIdBolao());
+			jogo = jogoService.findById(dto.getIdJogo());
 		} catch (NotFoundException e) {
 			throw new NotFoundException(e.getMessage());
 		}
 
 		try {
-			usuario = usuarioService.findById(dto.getIdUsuario());
+			participante = participanteService.findById(dto.getIdParticipante());
 		} catch (NotFoundException e) {
 			throw new NotFoundException(e.getMessage());
 		}
 
-		participante.setBolao(bolao);
-		participante.setUsuario(usuario);
-		participante.setVencedor(Boolean.FALSE);
 
-		if (dto.getId() == null) {
-			try {
-				Integer idParticipante = participanteService.insert(participante);
-				participante.setId(idParticipante);
-			} catch (BadRequestException e) {
-				throw new BadRequestException(e.getMessage());
-			}
-		}
+//		if (dto.getId() == null) {
+//			try {
+//				Integer idParticipante = participanteService.insert(participante);
+//				participante.setId(idParticipante);
+//			} catch (BadRequestException e) {
+//				throw new BadRequestException(e.getMessage());
+//			}
+//		}
 
 		Palpite palpite = new Palpite();
-		palpite.setBolao(bolao);
+		palpite.setJogo(jogo);
 		palpite.setParticipante(participante);
 		palpite.setResultadoTimeUm(dto.getResultadoTimeUm());
 		palpite.setResultadoTimeDois(dto.getResultadoTimeDois());
 		palpite.setId(dto.getId());
 
-		System.out.println(palpite.getId());
 		dao.insert(palpite);
 	}
 
-	public List<Palpite> findAllByUsuario(Integer idUsuario) {
-		return dao.findAllByUsuario(idUsuario);
+	public List<Palpite> findByParticipante(Integer idParticipante) {
+		return dao.findByParticipante(idParticipante);
 	}
 
-	public void deleteByParticipante(Integer idParticipante) {
-		dao.deleteByParticipante(idParticipante);
+	public void delete(Integer id) {
+		dao.deleteById(id);
 	}
 }

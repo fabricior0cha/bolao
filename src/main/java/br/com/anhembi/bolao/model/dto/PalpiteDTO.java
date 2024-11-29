@@ -8,9 +8,9 @@ public class PalpiteDTO implements Serializable{
 
 	private Integer id;
 	
-	private Integer idUsuario;
+	private Integer idParticipante;
 	
-	private Integer idBolao;
+	private Integer idJogo;
 	
 	private Boolean vencedor;
 	
@@ -18,11 +18,11 @@ public class PalpiteDTO implements Serializable{
 	
 	private Integer resultadoTimeDois;
 
-	public PalpiteDTO(Integer id, Integer idUsuario, Integer idBolao, Boolean vencedor, Integer resultadoTimeUm,
+	public PalpiteDTO(Integer id, Integer idParticipante, Integer idJogo, Boolean vencedor, Integer resultadoTimeUm,
 			Integer resultadoTimeDois) {
 		this.id = id;
-		this.idUsuario = idUsuario;
-		this.idBolao = idBolao;
+		this.idParticipante = idParticipante;
+		this.idJogo = idJogo;
 		this.vencedor = vencedor;
 		this.resultadoTimeUm = resultadoTimeUm;
 		this.resultadoTimeDois = resultadoTimeDois;
@@ -39,20 +39,22 @@ public class PalpiteDTO implements Serializable{
 		this.id = id;
 	}
 
-	public Integer getIdUsuario() {
-		return idUsuario;
+	
+
+	public Integer getIdParticipante() {
+		return idParticipante;
 	}
 
-	public void setIdUsuario(Integer idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setIdParticipante(Integer idParticipante) {
+		this.idParticipante = idParticipante;
 	}
 
-	public Integer getIdBolao() {
-		return idBolao;
+	public Integer getIdJogo() {
+		return idJogo;
 	}
 
-	public void setIdBolao(Integer idBolao) {
-		this.idBolao = idBolao;
+	public void setIdJogo(Integer idJogo) {
+		this.idJogo = idJogo;
 	}
 
 	public Boolean getVencedor() {

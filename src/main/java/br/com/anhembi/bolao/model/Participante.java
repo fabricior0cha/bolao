@@ -6,19 +6,16 @@ public class Participante {
 	
 	private Usuario usuario;
 	
-	private Bolao bolao;
-	
-	private Boolean vencedor;
+	private Integer pontos;
 	
 	public Participante() {
 	
 	}
 
-	public Participante(Integer id, Usuario usuario, Bolao bolao, Boolean vencedor) {
+	public Participante(Integer id, Usuario usuario, Integer pontos) {
 		this.id = id;
 		this.usuario = usuario;
-		this.bolao = bolao;
-		this.vencedor = vencedor;
+		this.pontos = pontos;
 	}
 
 	public Integer getId() {
@@ -37,20 +34,13 @@ public class Participante {
 		this.usuario = usuario;
 	}
 
-	public Bolao getBolao() {
-		return bolao;
+	public Integer getPontos() {
+		return pontos;
 	}
 
-	public void setBolao(Bolao bolao) {
-		this.bolao = bolao;
+	public void setPontos(Integer pontos) {
+		this.pontos = pontos;
 	}
 
-	public Boolean getVencedor() {
-		return vencedor;
-	}
-
-	public void setVencedor(Boolean vencedor) {
-		this.vencedor = vencedor;
-	}
 	
 }
